@@ -1,5 +1,7 @@
 const University = require('../models/University');
 const path = require('path');
+const { mongooseToObject } = require('../../util/mongoose');
+
 
 class UniversityController {
     // [GET] /university/:slug
@@ -7,7 +9,7 @@ class UniversityController {
         University.findOne({slug: req.params.slug})
         .then((uni) =>
             res.render('university/show', {
-                uni
+                uni: mongooseToObject(uni),
             }),
         )
         .catch(next);
