@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const methodOverride = require('method-override');
 const handlebars = require("express-handlebars");
 
 const route = require("./routes");
@@ -20,6 +21,14 @@ app.engine(
     extname: ".hbs",
     helpers: {
       sum: (a, b) => a + b,
+      capitalize: (str) => {
+        const arr = str.split(" ");
+        let result = "";
+        for (let i = 0; i < arr.length; i++) {
+          result += arr[i].charAt(0).toUpperCase() + arr[i].slice(1).toLowerCase() + " "
+        }
+        return result;
+      },
     },
   })
 );
@@ -30,6 +39,7 @@ app.set("views", path.join(__dirname,  "views"));
 
 app.use(logger("dev"));
 app.use(express.json());
+app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname ,"public")));
