@@ -1,6 +1,5 @@
 const University = require('../models/University');
-const path = require('path');
-const { mongooseToObject } = require('../../util/mongoose');
+const { mongooseToObject, mutipleMongooseToObject } = require('../../util/mongoose');
 
 
 class UniversityController {
@@ -22,18 +21,34 @@ class UniversityController {
 
     // [POST] /university/store
     store(req, res, next) {
-        // req.body.image = `${path.join(path.basename(path.dirname(path.dirname(__dirname))), 'public', 'images/') +'imagename'}`;
         const university = new University(req.body);
         university
             .save()
-            .then(() => res.redirect('/home'))
-            .catch(next);
+            .then(() => res.redirect('/'))
+            .catch((error) => {});
     }
     
     // [DELETE] /university/:id
     delete(req, res, next) {
         University.deleteOne({_id: req.params.id})
-        .then(() => {res.redirect('back')})
+        .then(() => res.redirect('back'))
+        .catch(next);
+    }
+
+    // [GET] /university/:id/edit
+    edit(req, res, next) {
+        University.findById(req.params.id)
+        .then((uni) => 
+            res.render('university/edit', {
+                uni: mongooseToObject(uni),
+            }),
+        )
+        .catch(next);
+    }
+    // [PUT] /university/:id
+    update(req, res, next) {
+        University.updateOne({ _id: req.params.id }, req.body)
+        .then(() => res.redirect('/admin/list-university'))
         .catch(next);
     }
 }

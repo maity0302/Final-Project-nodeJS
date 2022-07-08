@@ -1,12 +1,9 @@
 <div id="work_single_banner" class="bg-light w-100" style="background-image: url({{uni.image}});">
   <div class="container-fluid text-white d-flex justify-content-center align-items-center border-0 rounded-0 p-0 py-5">
-    <div class="banner-content col-lg-8 m-lg-auto text-center py-5 px-3";>
-      <h1 class="banner-heading h2 pb-5 typo-space-line-center">{{uni.name}}</<h1>
+    <div class="banner-content col-lg-8 m-lg-auto text-center py-5 px-3" ;>
+      <h1 class="banner-heading h2 pb-5 typo-space-line-center">{{capitalize uni.name}}</<h1>
       </h1>
-      <h3 class="h4 pb-2 light-300">{{uni.address}}</h3>
-      <p class="banner-footer light-300">
-        {{uni.description}}
-      </p>
+      <h3 class="h4 pb-2 light-300"><i class='bx-fw bx bxs-map bx-sm' style='color:#4232c2'></i>{{uni.address}}</h3>
     </div>
   </div>
 </div>
@@ -14,7 +11,7 @@
 <section class="container py-5">
   <div class="row pt-5">
     <div class="worksingle-content col-lg-8 m-auto text-left justify-content-center">
-      <h2 class="worksingle-heading h3 pb-3 light-300 typo-space-line">{{uni.name}}</h2>
+      <h2 class="worksingle-heading h3 pb-3 light-300 typo-space-line">{{capitalize uni.name}}</h2>
       <h5 class="accordion-title plain active text-primary py-1" style="background-color: rgba(0,0,0,.03);">
         <i class='bx bxs-star' style='color:#4232c2'></i>
         Mô tả
@@ -159,13 +156,13 @@
       <p class="text-muted light-300">
       <ul class="list-group list-group-flush">
         <li class="list-group-item"><i class='bx-fw bx bx-phone bx-sm' style='color:#555'></i>: <a
-            href="tel:{{uni.phone}}" class="text-decoration-none" rel="noopener">{{uni.phone}}</a></li>
+            href="tel:{{uni.phone}}" class="text-decoration-none" rel="noopener" target="_blank">{{uni.phone}}</a></li>
         <li class="list-group-item"><i class='bx-fw bx bx-envelope bx-sm' style='color:#555'></i>: <a
-            href="mailto:{{uni.email}}" class="text-decoration-none" rel="noopener">{{uni.email}}</a></li>
+            href="mailto:{{uni.email}}" class="text-decoration-none" rel="noopener" target="_blank">{{uni.email}}</a></li>
         <li class="list-group-item"><i class='bx-fw bx bx-link bx-sm' style='color:#555'></i>: <a href="{{uni.website}}"
-            class="text-decoration-none" rel="noopener">{{uni.website}}</a></li>
+            class="text-decoration-none" rel="noopener" target="_blank">{{uni.website}}</a></li>
         <li class="list-group-item"><i class='bx-fw bx bxl-facebook-circle bx-sm' style='color:#555555'></i>: <a
-            href="{{uni.facebook}}" class="text-decoration-none" rel="noopener">{{uni.facebook}}</a></li>
+            href="{{uni.facebook}}" class="text-decoration-none" rel="noopener" target="_blank">{{uni.facebook}}</a></li>
       </ul>
       </p>
     </div>
@@ -176,7 +173,7 @@
     <div class="col-md-8 m-auto text-left justify-content-center">
       <h5 class="accordion-title plain active text-primary py-1" style="background-color: rgba(0,0,0,.03);">
         <i class='bx bxs-star' style='color:#4232c2'></i>
-        {{uni.name}}
+        {{capitalize uni.name}}
       </h5>
     </div>
   </div><!-- End Qute -->
@@ -205,21 +202,20 @@
     <div class="worksingle-comment-body col-md-8 m-auto">
       <div class="d-flex">
         <div>
-          <img class="rounded-circle" src="{{uni.image}}" style="width: 50px;">
+          <img class="rounded-circle" src="{{uni.image}}" style="width: 50px; height: 50px">
         </div>
         <div class="comment-body w-100">
           <div class="comment-header d-flex justify-content-between ms-3">
             <div class="header text-start">
-              <h5 class="h6">{{uni.name}}</h5>
+              <h5 class="h6">{{capitalize uni.name}}</h5>
               <p class="text-muted light-300">10 mins ago</p>
             </div>
-            <a href="#" class="text-decoration-none"><i class='bx-fw bx bxs-message-alt-error bx-sm' style='color:#555555'></i></i>Báo cáo</a>
+            <a href="#" class="text-decoration-none"><i class='bx-fw bx bxs-message-alt-error bx-sm'
+                style='color:#555555'></i></i>Báo cáo</a>
           </div>
-          <div class="footer">
-            <div class="card-body ms-3 light-300">
+            <div class="card-body ms-3 light-300 pt-0">
               ABC
             </div>
-          </div>
         </div>
       </div>
     </div>

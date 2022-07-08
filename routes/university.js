@@ -5,6 +5,8 @@ universityController = require('../app/controllers/UniversityController');
 
 router.get('/create', universityController.create);
 router.post('/store',universityController.store);
+router.get('/:id/edit', universityController.edit);
+router.put('/:id', universityController.update);
 router.delete('/:id', universityController.delete);
 router.get('/:slug', universityController.show);
 

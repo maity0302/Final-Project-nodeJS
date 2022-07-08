@@ -1,0 +1,85 @@
+<div class="mt-4">
+  <div>
+    <h3>Danh sách các trường học</h3>
+  </div>
+  <table class="table mt-4 text-center">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Tên trường</th>
+        <th scope="col">Địa chỉ</th>
+        <th scope="col">Điện thoại</th>
+        <th scope="col">Mã trường</th>
+        <th scope="col">Trình độ</th>
+        <th scope="col">Học phí</th>
+        <th scope="col" colspan="2">Ngày tạo</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each uni}}
+      <tr>
+        <th scope="row">{{sum @index 1}}</th>
+        <td>{{this.name}}</td>
+        <td>{{this.address}}</td>
+        <td>{{this.phone}}</td>
+        <td>{{this.code}}</td>
+        <td>{{this.level}}</td>
+        <td>{{this.tuision}}</td>
+        <td>{{this.createdAt}}</td>
+        <td>
+          <a href="/university/{{this._id}}/edit" class="btn btn-link"><i class="bx bx-edit-alt"
+              style="color:#555"></i></a>
+          <a href="" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-university"
+            data-bs-id="{{this._id}}">
+            <i class="bx bx-x" style="color:red"></i></a>
+        </td>
+      </tr>
+      {{else}}
+      <tr>
+        <td colspan="9" class="text-center">
+          Không tồn tại dữ liệu đánh giá nào.
+          <a href="/university/create">Đăng bài đánh giá</a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+{{! Confirm delete course }}
+<div class="modal fade" id="delete-university" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Bạn chắc chắc muốn xoá dữ liệu này?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger text-white" id="btn-delete-university">Xoá bỏ</button>
+        <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Huỷ</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- delete university form --}}
+<form name="delete-university-form" method="POST"></form>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var universityId;
+    var deleteForm = document.forms['delete-university-form'];
+    var btnDeleteUniversity = document.getElementById('btn-delete-university');
+
+    // when click button delete university
+    $('#delete-university').on('show.bs.modal', function (event) {
+      var button = event.relatedTarget;
+      universityId = button.getAttribute('data-bs-id');
+    });
+    btnDeleteUniversity.onclick = function() {
+      deleteForm.action = '/university/' + universityId + '?_method=DELETE';
+      deleteForm.submit();
+    }
+  })
+</script>
