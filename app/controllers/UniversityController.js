@@ -21,6 +21,13 @@ class UniversityController {
 
     // [POST] /university/store
     store(req, res, next) {
+        if(req.files) {
+            let arr = [];
+            for(let index = 0; index < req.files.length; index ++){
+                arr.push(req.files[index].filename)
+            }
+            req.body.image = arr;
+        }
         const university = new University(req.body);
         university
             .save()
@@ -47,6 +54,13 @@ class UniversityController {
     }
     // [PUT] /university/:id
     update(req, res, next) {
+        if(req.files) {
+            let arr = [];
+            for(let index = 0; index < req.files.length; index ++){
+                arr.push(req.files[index].filename)
+            }
+            req.body.image = arr;
+        }
         University.updateOne({ _id: req.params.id }, req.body)
         .then(() => res.redirect('/admin/list-university'))
         .catch(next);

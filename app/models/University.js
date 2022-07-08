@@ -15,7 +15,7 @@ const University = new Schema(
         level: {type: String},
         description: { type: String, trim: true },
         tuision:{type: Number, trim: true},
-        image: {type: String},
+        image: {type: [String]},
         slug: { type: String, slug: 'code', unique: true, lowercase: true },
     },
     {

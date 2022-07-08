@@ -1,6 +1,6 @@
 <div class="mt-4">
     <h3 class="text-center text-primary">Thêm trường</h3>
-    <form method="POST" action="/university/store" class="w-75 mx-auto">
+    <form method="POST" action="/university/store" class="w-75 mx-auto" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Tên trường</label>
             <input type="text" class="form-control" id="name" name="name">
@@ -43,7 +43,7 @@
         </div>
         <div class="form-group">
             <label for="image">Ảnh trường</label>
-            <input type="text" class="form-control" id="image" name="image">
+            <input type="file" class="form-control" id="image" name="image" multiple>
         </div>
         <button type="submit" class="btn btn-primary mt-2 d-flex mx-auto">Thêm trường</button>
     </form>

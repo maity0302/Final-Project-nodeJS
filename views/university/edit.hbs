@@ -1,6 +1,6 @@
 <div class="mt-4">
     <h3 class="text-center text-primary">Chỉnh sửa thông tin trường</h3>
-    <form method="POST" action="/university/{{uni._id}}?_method=PUT" class="w-75 mx-auto">
+    <form method="POST" action="/university/{{uni._id}}?_method=PUT" class="w-75 mx-auto" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Tên trường</label>
             <input type="text" class="form-control" id="name" name="name" value="{{uni.name}}">
@@ -43,8 +43,12 @@
         </div>
         <div class="form-group">
             <label for="image">Ảnh trường</label>
-            <input type="text" class="form-control" id="image" name="image" value="{{uni.image}}">
-            <img src="{{uni.image}}" alt="{{uni.name}}" class="w-25 img-fluid img-thumbnail rounded mx-auto d-block">
+            <input type="file" class="form-control" id="image" name="image" multiple>
+            <div class="d-flex justify-content-center">
+                {{#each uni.image}}
+                    <img src="/images/{{this}}" alt="{{uni.name}}" class="w-25 img-fluid img-thumbnail rounded">
+                {{/each}}
+            </div>
         </div>
         <button type="submit" class="btn btn-primary mt-2 d-flex mx-auto">Lưu lại</button>
     </form>
