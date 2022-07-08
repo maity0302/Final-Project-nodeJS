@@ -3,7 +3,7 @@
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 {{#each universitys}}
-                <div class="carousel-item pt-5" style="background-image: url('{{this.image}}');" >
+                <div class="carousel-item pt-5" style="background-image: url('/images/{{getFirstItem this.image}}');" >
                     <div class="py-5 row d-flex align-items-center">
                         <div class="banner-content col-lg-9 col-9 offset-2 m-lg-auto text-center py-5 pb-5">
                             <h1
