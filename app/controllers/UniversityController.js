@@ -5,13 +5,18 @@ const { mongooseToObject, mutipleMongooseToObject } = require('../../util/mongoo
 class UniversityController {
     // [GET] /university/:slug
     show(req, res, next) {
-        University.findOne({slug: req.params.slug})
-        .then((uni) =>
-            res.render('university/show', {
-                uni: mongooseToObject(uni),
-            }),
-        )
-        .catch(next);
+        University.findOne({ slug: req.params.slug })
+            .then((uni) =>
+                University.aggregate([{ $sample: { size: 3 } }, { $project: { slug: 1, name: 1, description: 1, image: 1 } }])
+                    .then((unis) => {
+                        console.log(unis)
+                        res.render('university/show', {
+                            uni: mongooseToObject(uni),
+                            unis: unis
+                        })
+                    })
+            )
+            .catch(next);
     }
 
     // [GET] /university/create
@@ -21,9 +26,9 @@ class UniversityController {
 
     // [POST] /university/store
     store(req, res, next) {
-        if(req.files) {
+        if (req.files) {
             let arr = [];
-            for(let index = 0; index < req.files.length; index ++){
+            for (let index = 0; index < req.files.length; index++) {
                 arr.push(req.files[index].filename)
             }
             req.body.image = arr;
@@ -32,38 +37,38 @@ class UniversityController {
         university
             .save()
             .then(() => res.redirect('/'))
-            .catch((error) => {});
+            .catch((error) => { });
     }
-    
+
     // [DELETE] /university/:id
     delete(req, res, next) {
-        University.deleteOne({_id: req.params.id})
-        .then(() => res.redirect('back'))
-        .catch(next);
+        University.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
     }
 
     // [GET] /university/:id/edit
     edit(req, res, next) {
         University.findById(req.params.id)
-        .then((uni) => 
-            res.render('university/edit', {
-                uni: mongooseToObject(uni),
-            }),
-        )
-        .catch(next);
+            .then((uni) =>
+                res.render('university/edit', {
+                    uni: mongooseToObject(uni),
+                }),
+            )
+            .catch(next);
     }
     // [PUT] /university/:id
     update(req, res, next) {
-        if(req.files) {
+        if (req.files) {
             let arr = [];
-            for(let index = 0; index < req.files.length; index ++){
+            for (let index = 0; index < req.files.length; index++) {
                 arr.push(req.files[index].filename)
             }
             req.body.image = arr;
         }
         University.updateOne({ _id: req.params.id }, req.body)
-        .then(() => res.redirect('/admin/list-university'))
-        .catch(next);
+            .then(() => res.redirect('/admin/list-university'))
+            .catch(next);
     }
 }
 module.exports = new UniversityController();

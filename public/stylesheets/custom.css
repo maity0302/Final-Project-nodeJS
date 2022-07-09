@@ -31,22 +31,6 @@ a {
   font-weight: 600;
 }
 
-.typo-space-line {
-  padding-top: 10%;
-}
-
-.typo-space-line::after,
-.typo-space-line-center::after {
-  content: "";
-  width: 150px;
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-bottom: 5px solid #6266ea;
-  padding-bottom: .5em;
-}
 
 /* Main Nav */
 #main_nav .nav-item .nav-link:hover {
