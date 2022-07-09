@@ -1,11 +1,51 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const multer = require("multer");
 
-universityController = require('../app/controllers/UniversityController');
+const {
+  uploadSingleFile,
+  uploadMultipleFiles,
+} = require("../util/uploadImage");
 
-router.get('/create', universityController.create);
-router.post('/store',universityController.store);
-router.delete('/:id', universityController.delete);
-router.get('/:slug', universityController.show);
+universityController = require("../app/controllers/UniversityController");
+
+router.get("/create", universityController.create);
+router.post(
+  "/store",
+  (req, res, next) => {
+    uploadMultipleFiles(req, res, (err) => {
+      if (
+        (!err instanceof multer.MulterError &&
+          err.code === "LIMIT_UNEXPECTED_FILE") ||
+        err
+      ) {
+        res.render("error");
+      } else {
+        next();
+      }
+    });
+  },
+  universityController.store
+);
+router.get("/:id/edit", universityController.edit);
+router.put(
+  "/:id",
+  (req, res, next) => {
+    uploadMultipleFiles(req, res, (err) => {
+      if (
+        (!err instanceof multer.MulterError &&
+          err.code === "LIMIT_UNEXPECTED_FILE") ||
+        err
+      ) {
+        res.render("error");
+      } else {
+        next();
+      }
+    });
+  },
+  universityController.update
+);
+router.delete("/:id", universityController.delete);
+router.get("/:slug", universityController.show);
 
 module.exports = router;
