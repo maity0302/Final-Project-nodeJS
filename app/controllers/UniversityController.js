@@ -1,18 +1,16 @@
 const University = require('../models/University');
-const { mongooseToObject, mutipleMongooseToObject } = require('../../util/mongoose');
 
 
 class UniversityController {
     // [GET] /university/:slug
     show(req, res, next) {
-        University.findOne({ slug: req.params.slug })
+        University.findOne({ slug: req.params.slug }).lean()
             .then((uni) =>
                 University.aggregate([{ $sample: { size: 3 } }, { $project: { slug: 1, name: 1, description: 1, image: 1 } }])
                     .then((unis) => {
-                        console.log(unis)
                         res.render('university/show', {
-                            uni: mongooseToObject(uni),
-                            unis: unis
+                            uni,
+                            unis,
                         })
                     })
             )
@@ -49,10 +47,10 @@ class UniversityController {
 
     // [GET] /university/:id/edit
     edit(req, res, next) {
-        University.findById(req.params.id)
+        University.findById(req.params.id).lean()
             .then((uni) =>
                 res.render('university/edit', {
-                    uni: mongooseToObject(uni),
+                    uni,
                 }),
             )
             .catch(next);
@@ -69,6 +67,17 @@ class UniversityController {
         University.updateOne({ _id: req.params.id }, req.body)
             .then(() => res.redirect('/admin/list-university'))
             .catch(next);
+    }
+    // [GET] /university/search
+    search(req,res,next) {
+        var searchText = req.query.q;
+        searchText = searchText.trim().toLowerCase();
+        var regex = new RegExp(searchText, 'i');
+        University.find({name: regex}).lean()
+        .then(result => {
+            res.render('university/search',{result})
+        })
+        .catch(next);
     }
 }
 module.exports = new UniversityController();

@@ -9,6 +9,7 @@ const {
 
 universityController = require("../app/controllers/UniversityController");
 
+router.get("/search", universityController.search);
 router.get("/create", universityController.create);
 router.post(
   "/store",
