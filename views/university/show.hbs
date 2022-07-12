@@ -93,7 +93,7 @@
         <li class="list-group-item"><i class='bx-fw bx bx-link bx-sm' style='color:#555'></i>: <a href="{{uni.website}}"
             class="text-decoration-none" rel="noopener" target="_blank">{{uni.website}}</a></li>
         <li class="list-group-item"><i class='bx-fw bx bxl-facebook-circle bx-sm' style='color:#555555'></i>: <a
-            href="{{uni.facebook}}" class="text-decoration-none" rel="noopener" target="_blank">{{uni.facebook}}</a>
+            href="{{uni.facebook}}" class="text-decoration-none" rel="noopener" target="_blank">{{uni.name}}</a>
         </li>
       </ul>
       </p>
@@ -187,7 +187,7 @@
               <div class="recent-work-vertical card-img-overlay d-flex align-items-end">
                 <div class="recent-work-content text-start mb-3 ml-3 text-dark">
                   <h3 class="card-title light-300">
-                    {{this.name}}
+                    {{capitalize this.name}}
                   </h3>
                   <p class="card-text block text-truncate" style="max-width: 350px;">
                     {{this.description}}

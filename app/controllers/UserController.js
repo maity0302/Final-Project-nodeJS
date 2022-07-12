@@ -1,7 +1,19 @@
+const User = require('../models/User');
 class UserController {
-    // pass
-    signup(req,res,next) {
-        res.json({msg:'success'})
+    // [GET] /signup
+    signup(req, res, next) {
+        res.render('signup');
+    }
+    // [GET] /login
+    login(req, res, next) {
+        res.render('login');
+    }
+    store(req, res, next) {
+        const user = new User(req.body);
+        user
+            .save()
+            .then(() => res.redirect('/user/login'))
+            .catch((error) => {console.log(error)});
     }
 }
 

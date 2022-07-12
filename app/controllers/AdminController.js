@@ -1,13 +1,13 @@
 const University = require('../models/University');
-const { mutipleMongooseToObject } = require('../../util/mongoose');
 
 class AdminController {
     // [GET] /me/list-university
     list(req, res, next) {
-        University.find({})
+        University.find({}).lean()
         .then((uni) => {
+            console.log(uni)
             res.render('admin/list-university', {
-                uni: mutipleMongooseToObject(uni),
+                uni,
             });
         })
         .catch(next); 

@@ -7,7 +7,6 @@ function route(app) {
   app.use('/admin', adminRouter);
   app.use('/university', universityRouter);
   app.use('/user',userRouter);
-
   app.use('/', siteRouter);
 }
 

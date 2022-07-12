@@ -1,0 +1,26 @@
+<div class="wrapper">
+    <div class="logo">
+        <img src="/images/logo.svg" alt="">
+    </div>
+    <div class="text-center mt-4 name">
+        Đăng ký
+    </div>
+    <form class="p-3 mt-3" method="POST" action="/user/store">
+        <div class="form-field d-flex align-items-center">
+            <i class='bx bx-user-circle bx-sm'></i>
+            <input type="text" name="username" id="username" placeholder="Username">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <i class='bx bx-envelope bx-sm'></i>
+            <input type="email" name="email" id="email" placeholder="email">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <i class='bx bxs-key bx-sm' ></i>
+            <input type="password" name="password" id="pwd" placeholder="Password">
+        </div>
+        <button class="btn mt-3" type="submit">Đăng ký</button>
+    </form>
+    <div class="text-center fs-6">
+        <a href="#">Quên mật khẩu?</a> or <a href="/user/login">Đăng nhập</a>
+    </div>
+</div>

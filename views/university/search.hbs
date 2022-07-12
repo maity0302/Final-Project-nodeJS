@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row height d-flex justify-content-center align-items-center">
+        <div class="col-md-8">
+            <div class="search mt-3">
+                <i class='bx bx-search bx-sm bx-tada-hover'></i>
+                <input type="text" class="form-control" placeholder="Tìm kiếm tên trường..." id="search">
+                <button class="btn btn-primary" id="btnSearch">Tìm kiếm</button>
+            </div>
+        </div>
+    </div>
+    <section class="py-5 mb-5" id="products">
+        <div class="container">
+            <div class="row gy-5 g-lg-5 mb-4">
+                {{#each result}}
+                <div class="col-md-4 mb-3">
+                    <a href="./{{this.slug}}" class="recent-work card border-0 shadow-lg overflow-hidden">
+                        <img class="recent-work-img card-img" src="/images/{{getFirstItem this.image}}"
+                            alt="Card image" />
+                        <div class="recent-work-vertical card-img-overlay d-flex align-items-end">
+                            <div class="recent-work-content text-start mb-3 ml-3 text-dark">
+                                <h3 class="card-title light-300 text-truncate" style="max-width: 90%;">
+                                    {{capitalize this.name}}
+                                </h3>
+                                <p class="card-text block text-truncate" style="max-width: 350px;">
+                                    {{this.description}}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var searchParams = new URLSearchParams(window.location.search);
+        var searchInput = document.getElementById('search');
+        var btnSearch = document.getElementById('btnSearch');
+        searchInput.addEventListener('keypress', function (event) {
+            if (event.key === "Enter") {
+                btnSearch.click();
+            }
+        });
+        btnSearch.onclick = function () {
+            location.href = `?q=${searchInput.value}`
+        }
+        if (searchParams.get('q') !== '') {
+            $("input:text").val(searchParams.get('q'));
+        }
+    });
+</script>
