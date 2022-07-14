@@ -1,4 +1,6 @@
 const University = require('../models/University');
+const { mutipleMongooseToObject, mongooseToObject} = require('../../util/mongoose');
+
 class SiteController {
     // [GET] /
     index(req, res, next) {
@@ -11,6 +13,7 @@ class SiteController {
                         res.render('home', {
                             maxPage: Math.ceil(totalPages / limit),
                             universitys,
+                            user:mongooseToObject(req.user),
                         });
                     })
             })

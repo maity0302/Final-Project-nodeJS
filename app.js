@@ -5,6 +5,9 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const methodOverride = require("method-override");
 const handlebars = require("express-handlebars");
+const passport = require('passport');
+const flash = require('connect-flash');
+const session = require('express-session');
 
 const route = require("./routes");
 const db = require("./config/db");
@@ -13,6 +16,24 @@ const db = require("./config/db");
 db.connect();
 
 var app = express();
+// passport config
+require('./config/passport')(passport);
+
+// Express session
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+  })
+);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Connect flash
+app.use(flash());
 
 // template engine
 app.engine(
@@ -33,6 +54,15 @@ app.engine(
         return result;
       },
       getFirstItem: (list) => list[0],
+      select: function (value, options) {
+        return options.fn(this)
+          .split('\n')
+          .map(function (v) {
+            var t = 'value="' + value + '"'
+            return !RegExp(t).test(v) ? v : v.replace(t, t + ' selected="selected"')
+          })
+          .join('\n')
+      },
     },
   })
 );
@@ -48,12 +78,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "/public/images")));
+
 // routers init
 route(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
+});
+// Global variables
+app.use(function (req, res, next) {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
 });
 
 // error handler

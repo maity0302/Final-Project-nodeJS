@@ -15,6 +15,9 @@
             <div class="flex-fill mx-xl-5 mb-2">
                 <ul class="nav navbar-nav d-flex justify-content-end mx-xl-5 text-center text-dark">
                     <li class="nav-item">
+                        <a class="nav-link btn-outline-primary rounded-pill px-3" href="/university/search">Tìm kiếm</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link btn-outline-primary rounded-pill px-3" href="/me/list-university">Xếp
                             hạng</a>
                     </li>
@@ -23,11 +26,35 @@
                     </li>
                 </ul>
             </div>
+            {{#if user}}
             <div class="navbar align-self-center d-flex">
-                <a class="nav-link" href="#"><i class='bx bx-bell bx-sm bx-tada-hover text-primary'></i></a>
-                <a class="nav-link" href="#"><i class='bx bx-cog bx-sm text-primary'></i></a>
-                <a class="nav-link" href="#"><i class='bx bx-user-circle bx-sm text-primary'></i></a>
+                {{#if user.isAdmin}}
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Quản lý
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="/admin/create">Bài review mới</a></li>
+                        <li><a class="dropdown-item" href="/admin/list-university">Danh sách review</a></li>
+                    </ul>
+                </div>
+                {{/if}}
+                <a class="nav-link text-dark" href="/me/profile">
+                    <img src="/images/{{user.image}}" alt="{{user.username}}" class="rounded-circle" style="width: 24px;">
+                    {{capitalize user.username}}
+                </a>
+                <a class="nav-link bx-tada-hover text-dark" href="/user/logout" role="button">
+                <i class='bx bx-fw bx-bell bx-log-in bx-sm'></i>Đăng xuất</a>
             </div>
+            {{else}}
+            <div class="navbar align-self-center d-flex">
+                <a class="btn btn-outline-primary nav-link me-2 bx-tada-hover" href="/user/login" role="button">Đăng
+                    nhập</a>
+                <a class="btn btn-outline-secondary nav-link bx-tada-hover" href="/user/signup" role="button">Đăng
+                    ký</a>
+            </div>
+            {{/if}}
         </div>
     </div>
 </nav>
