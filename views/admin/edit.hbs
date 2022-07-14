@@ -1,0 +1,55 @@
+<div class="mt-4">
+    <h3 class="text-center text-primary">Chỉnh sửa thông tin trường</h3>
+    <form method="POST" action="/admin/{{uni._id}}?_method=PUT" class="w-75 mx-auto" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Tên trường</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{uni.name}}">
+        </div>
+        <div class="form-group">
+            <label for="address">Địa chỉ</label>
+            <input type="text" class="form-control" id="address" name="address" value="{{uni.address}}">
+        </div>
+        <div class="form-group">
+            <label for="phone">Số điện thoại</label>
+            <input type="string" class="form-control" id="phone" name="phone" value="{{uni.phone}}">
+        </div>
+        <div class="form-group">
+            <label for="mail">Email</label>
+            <input type="mail" class="form-control" id="mail" name="mail" value="{{uni.email}}">
+        </div>
+        <div class="form-group">
+            <label for="website">website</label>
+            <input type="url" class="form-control" id="website" name="website" value="{{uni.website}}">
+        </div>
+        <div class="form-group">
+            <label for="code">Mã trường</label>
+            <input type="text" class="form-control" id="code" name="code" value="{{uni.code}}">
+        </div>
+        <div class="form-group">
+            <label for="facebook">Facebook</label>
+            <input type="url" class="form-control" id="facebook" name="facebook" value="{{uni.facebook}}">
+        </div>
+        <div class="form-group">
+            <label for="level">Trình độ</label>
+            <input type="text" class="form-control" id="level" name="level" value="{{uni.level}}">
+        </div>
+        <div class="form-group">
+            <label for="description">Mô tả</label>
+        <textarea class="form-control" id="description" name="description">{{uni.description}}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="tuision">Học phí</label>
+            <input type="number" class="form-control" id="tuision" name="tuision" value="{{uni.tuision}}">
+        </div>
+        <div class="form-group">
+            <label for="image">Ảnh trường</label>
+            <input type="file" class="form-control" id="image" name="image" multiple>
+            <div class="d-flex justify-content-center">
+                {{#each uni.image}}
+                    <img src="/images/{{this}}" alt="{{uni.name}}" class="w-25 img-fluid img-thumbnail rounded">
+                {{/each}}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2 d-flex mx-auto">Lưu lại</button>
+    </form>
+</div>

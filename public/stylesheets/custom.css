@@ -262,3 +262,8 @@ footer a.text-light:hover {
       padding: 40px 15px 15px 15px;
   }
 }
+
+.nav-link{
+	box-shadow: none !important;
+  outline: none !important;
+}

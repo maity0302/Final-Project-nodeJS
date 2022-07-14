@@ -30,6 +30,22 @@ const User = new Schema({
         type: Boolean,
         default: false,
     },
+    image: {
+        type: String,
+        default: "defaultAvatar.jpg"
+    },
+    bio: {
+        type: String,
+        trim: true,
+    },
+    sex: {
+        type: String,
+        trim: true,
+        default: "0"
+    },
+    date: {
+        type: Date
+    }
 },
     {
         timestamps: true,

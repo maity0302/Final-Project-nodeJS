@@ -3,24 +3,36 @@
         <img src="/images/logo.svg" alt="">
     </div>
     <div class="text-center mt-4 name">
+        {{#if errors}}
+        {{#each errors}}
+        <p class="alert alert-danger alert-dismissible fade show" role="alert" style="font-size: 12px;">{{msg}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </p>
+        {{/each}}
+        {{else}}
         Đăng ký
+        {{/if}}
     </div>
-    <form class="p-3 mt-3" method="POST" action="/user/store">
+    <form class="p-3 mt-3" action="/user/store" method="POST">
         <div class="form-field d-flex align-items-center">
             <i class='bx bx-user-circle bx-sm'></i>
             <input type="text" name="username" id="username" placeholder="Username">
         </div>
         <div class="form-field d-flex align-items-center">
             <i class='bx bx-envelope bx-sm'></i>
-            <input type="email" name="email" id="email" placeholder="email">
+            <input type="email" name="email" id="email" placeholder="Email">
         </div>
         <div class="form-field d-flex align-items-center">
-            <i class='bx bxs-key bx-sm' ></i>
-            <input type="password" name="password" id="pwd" placeholder="Password">
+            <i class='bx bxs-key bx-sm'></i>
+            <input type="password" name="password" id="password" placeholder="Mật khẩu">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <i class='bx bxs-key bx-sm'></i>
+            <input type="password" name="password2" id="password2" placeholder="Nhập lại mật khẩu">
         </div>
         <button class="btn mt-3" type="submit">Đăng ký</button>
     </form>
-    <div class="text-center fs-6">
-        <a href="#">Quên mật khẩu?</a> or <a href="/user/login">Đăng nhập</a>
+    <div class="text-center fs-6 pe-3">
+        <a href="#">Quên mật khẩu?</a> | <a href="/user/login">Đăng nhập</a>
     </div>
 </div>

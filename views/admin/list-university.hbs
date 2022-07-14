@@ -27,7 +27,7 @@
         <td>{{this.tuision}}</td>
         <td>{{this.createdAt}}</td>
         <td>
-          <a href="/university/{{this._id}}/edit" class="btn btn-link"><i class="bx bx-edit-alt"
+          <a href="/admin/{{this._id}}/edit" class="btn btn-link"><i class="bx bx-edit-alt"
               style="color:#555"></i></a>
           <a href="" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-university"
             data-bs-id="{{this._id}}">
@@ -38,7 +38,7 @@
       <tr>
         <td colspan="9" class="text-center">
           Không tồn tại dữ liệu đánh giá nào.
-          <a href="/university/create">Đăng bài đánh giá</a>
+          <a href="/admin/create">Đăng bài đánh giá</a>
         </td>
       </tr>
       {{/each}}
@@ -78,7 +78,7 @@
       universityId = button.getAttribute('data-bs-id');
     });
     btnDeleteUniversity.onclick = function() {
-      deleteForm.action = '/university/' + universityId + '?_method=DELETE';
+      deleteForm.action = '/admin/' + universityId + '?_method=DELETE';
       deleteForm.submit();
     }
   })
