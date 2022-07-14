@@ -19,6 +19,12 @@ class SiteController {
             })
             .catch(next);
     }
+    // [GET] /contact
+    contact(req, res, next) {
+        res.render('contact', {
+            user:mongooseToObject(req.user),
+        })
+    }
 }
 
 module.exports = new SiteController();
