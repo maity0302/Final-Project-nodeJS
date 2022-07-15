@@ -1,0 +1,106 @@
+<div class="mt-4">
+  <div>
+    <h3 class="text-center">Danh sách bình luận bị báo cáo</h3>
+  </div>
+  <table class="table mt-4 text-center">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col" colspan="2">Nội dung</th>
+        <th scope="col">Ngày tạo</th>
+        <th scope="col">Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each comment}}
+      <tr>
+        <th scope="row">{{sum @index 1}}</th>
+        <td colspan="2">{{this.content}}</td>
+        <td>{{this.createdAt}}</td>
+        <td>
+          <a href="" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#verify-comment"
+            data-bs-id="{{this._id}}">
+            <i class="bx bx-sm bx-check" style="color:rgb(61, 233, 3)"></i></a>
+          <a href="" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-comment"
+            data-bs-id="{{this._id}}">
+            <i class="bx bx-sm bx-x" style="color:red"></i></a>
+        </td>
+      </tr>
+      {{else}}
+      <tr>
+        <td colspan="9" class="text-center">
+          Không tồn tại dữ liệu nào.
+          <a href="/">Trang chủ.</a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+{{! Confirm delete comment }}
+<div class="modal fade" id="delete-comment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Bạn chắc chắc muốn xoá dữ liệu này?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger text-white" id="btn-delete-comment">Xoá bỏ</button>
+        <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Huỷ</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- Confirm verify comment --}}
+<div class="modal fade" id="verify-comment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Bình luận này không vi phạm tiêu chuẩn ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger text-white" id="btn-verify-comment">Giữ lại</button>
+        <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Huỷ</button>
+      </div>
+    </div>
+  </div>
+</div>
+<form name="delete-comment-form" method="POST"></form>
+<form name="verify-comment-form" method="POST"></form>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var commentId;
+    var deleteForm = document.forms['delete-comment-form'];
+    var btnDeleteComment = document.getElementById('btn-delete-comment');
+
+    // when click button delete comment
+    $('#delete-comment').on('show.bs.modal', function (event) {
+      var button = event.relatedTarget;
+      commentId = button.getAttribute('data-bs-id');
+    });
+    btnDeleteComment.onclick = function() {
+      deleteForm.action = '/admin/' + commentId + '/delete?_method=DELETE';
+      deleteForm.submit();
+    }
+    
+    var verifyForm = document.forms['verify-comment-form'];
+    var btnVerifyComment = document.getElementById('btn-verify-comment');
+    $('#verify-comment').on('show.bs.modal', function (event) {
+      var button = event.relatedTarget;
+      commentId = button.getAttribute('data-bs-id');
+    });
+    btnVerifyComment.onclick = function() {
+      verifyForm.action = '/admin/' + commentId + '/verify';
+      verifyForm.submit();
+    }
+  })
+</script>

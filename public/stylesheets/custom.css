@@ -267,3 +267,8 @@ footer a.text-light:hover {
 	box-shadow: none !important;
   outline: none !important;
 }
+.vote:hover {
+  cursor: pointer;
+  color: red;
+  border-radius: 8px;
+}
