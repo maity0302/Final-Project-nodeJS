@@ -1,4 +1,5 @@
 const University = require('../models/University');
+const comments = require('../models/Comment');
 const { mutipleMongooseToObject, mongooseToObject} = require('../../util/mongoose');
 
 class AdminController {
@@ -54,17 +55,40 @@ class AdminController {
     // [PUT] /admin/:id
     update(req, res, next) {
         if (req.files) {
+            console.log(req.body)
             let arr = [];
             for (let index = 0; index < req.files.length; index++) {
                 arr.push(req.files[index].filename)
             }
             req.body.image = arr;
-        } else {
-            req.body.image = req.body.image;
         }
         University.updateOne({ _id: req.params.id }, req.body)
-            .then(() => res.redirect('/admin/list-university'))
-            .catch(next);
+        .then(() => res.redirect('/admin/list-university'))
+        .catch(next);
+    }
+    // [GET] /admin/comments
+    listcomments(req, res, next) {
+        comments.find({isReported: true}).lean()
+        .then(comment => {
+            res.render('admin/reportComments', {
+                user:mongooseToObject(req.user),
+                comment
+            })
+        })
+    };
+    // [POST] /admin/:id/verify
+    verifyComment(req, res, next) {
+        console.log("Đã vào")
+        console.log(req.params)
+        comments.findOneAndUpdate({_id: req.params.id}, { $set: { isReported : false } })
+        .then(() => res.redirect('back'))
+        .catch(err => console.log(err));
+    }
+    // [DELETE] /admin/:id/delete
+    deleteComment(req, res, next) {
+        comments.deleteOne({_id: req.params.id})
+        .then(() => res.redirect('back'))
+        .catch(next);
     }
 }
 

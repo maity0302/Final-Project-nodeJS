@@ -65,7 +65,7 @@
       </div>
     </div>
   </div>
-<div class="row pt-5">
+  <div class="row pt-5">
     <div class="worksingle-content col-lg-8 m-auto text-left justify-content-center">
       <h2 class="worksingle-heading h3 pb-3 light-300">{{capitalize uni.name}}</h2>
       <h5 class="accordion-title plain active text-primary py-1" style="background-color: rgba(0,0,0,.03);">
@@ -98,9 +98,7 @@
       </ul>
       </p>
     </div>
-  </div><!-- End Paragrph -->
-
-
+  </div>
   <div class="row">
     <div class="col-md-8 m-auto text-left justify-content-center">
       <h5 class="accordion-title plain active text-primary py-1" style="background-color: rgba(0,0,0,.03);">
@@ -108,10 +106,9 @@
         {{capitalize uni.name}}
       </h5>
     </div>
-  </div><!-- End Qute -->
-
+  </div>
   <div class="row justify-content-center">
-    <div class="col-lg-8 ml-auto mr-auto pt-3 pb-4">
+    <div class="col-lg-8 mx-auto pt-3 pb-4">
       <p class="text-muted light-300">
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Trình độ: {{uni.level}}</li>
@@ -121,46 +118,62 @@
       </p>
     </div>
   </div>
-  <!-- End Work Sigle -->
-
-  <!-- Start Comment -->
+  <div class="row justify-content-center">
+    <div class="col-lg-8 mx-auto pt-3 pb-4 text-end">
+      {{#if (isdefined isUpVotes)}}
+      <i class='bx bxs-upvote bx-md vote up'></i><span>{{up}}</span>
+      <i class='bx bx-downvote bx-md vote down'></i><span>{{down}}</span>
+      {{else}}
+      {{#if (isdefined isDownVotes)}}
+      <i class='bx bx-upvote bx-md vote up'></i><span>{{up}}</span>
+      <i class='bx bxs-downvote bx-md vote down'></i><span>{{down}}</span>
+      {{else}}
+      <i class='bx bx-upvote bx-md vote up'></i><span>{{up}}</span>
+      <i class='bx bx-downvote bx-md vote down'></i><span>{{down}}</span>
+      {{/if}}
+      {{/if}}
+    </div>
+  </div>
   <div class="row justify-content-center">
     <div class="worksingle-comment-heading col-8 m-auto pb-3">
+      <hr>
       <h4 class="h5">Bình luận</h4>
     </div>
   </div>
 
   <div class="row pb-4">
-    <div class="worksingle-comment-body col-md-8 m-auto">
+    <div class="worksingle-comment-body col-md-8 mx-auto" style="max-height: 500px; overflow-y: auto;">
+      {{#each comments}}
       <div class="d-flex">
         <div>
-          <img class="rounded-circle" src="/images/{{getFirstItem uni.image}}" style="width: 50px; height: 50px">
+          <img class="rounded-circle" src="/images/defaultAvatar.jpg" style="width: 50px; height: 50px">
         </div>
         <div class="comment-body w-100">
           <div class="comment-header d-flex justify-content-between ms-3">
             <div class="header text-start">
-              <h5 class="h6">{{capitalize uni.name}}</h5>
-              <p class="text-muted light-300">10 mins ago</p>
+              <h5 class="h6">Ẩn danh</h5>
             </div>
-            <a href="#" class="text-decoration-none"><i class='bx-fw bx bxs-message-alt-error bx-sm'
-                style='color:#555555'></i></i>Báo cáo</a>
+            <a href="" class="btn btn-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#reportComment"
+              data-bs-id="{{ this._id }}" id="reportCommentBtn">
+              <i class='bx-fw bx bxs-message-alt-error bx-sm'></i></i>Report</a>
           </div>
           <div class="card-body ms-3 light-300 pt-0">
-            ABC
+            {{this.content}}
           </div>
         </div>
       </div>
+      {{/each}}
     </div>
-  </div><!-- End Comment -->
+  </div>
   <div class="row pb-4">
     <div class="worksingle-comment-footer col-lg-8 m-auto">
-      <form class="col-md-12 m-auto" method="POST" action="#" role="form">
+      <form class="col-md-12 m-auto" method="POST" action="/comment" role="form">
         <div class="form-group">
-          <label class="pb-2 pt-sm-0 pt-4 light-300" for="inputmessage">Thêm bình luận</label>
-          <textarea class="form-control form-control-lg light-300" id="inputmessage" name="inputmessage"
-            placeholder="nội dung..." rows="5"></textarea>
+          <label class="pb-2 pt-sm-0 pt-4 light-300" for="content">Thêm bình luận</label>
+          <textarea class="form-control form-control-lg light-300" id="content" name="content" placeholder="nội dung..."
+            rows="5" required></textarea>
+          <input type="text" class="d-none" name="postId" value="{{uni._id}}">
         </div>
-
         <div class="form-row pt-2">
           <div class="col-md-12 col-10 text-end">
             <button type="submit" class="btn btn-secondary text-white px-md-4 px-2 py-md-3 py-1 radius-0 light-300">Bình
@@ -169,11 +182,8 @@
         </div>
       </form>
     </div>
-  </div><!-- End Comment Form -->
+  </div>
 </section>
-<!-- End Work Sigle -->
-
-<!-- Start Related Post -->
 <article class="container-fluid bg-light">
   <div class="container">
     <div class="worksingle-related-header row">
@@ -201,16 +211,76 @@
       </div>
     </div>
 </article>
+{{! Confirm report comment }}
+<div class="modal fade" id="reportComment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Bạn chắc chắc muốn báo cáo bình luận này?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger text-white" id="btnReportComment">Báo cáo</button>
+        <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Huỷ</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- delete university form --}}
+<form name="reportCommentForm" method="POST"></form>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    $(window).on('load',(function () {
-      // Slide
+      var commentId;
+      var reportForm = document.forms['reportCommentForm'];
+      var btnReportComment = document.getElementById('btnReportComment');
+
+      $('#reportComment').on('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        commentId = button.getAttribute('data-bs-id');
+      });
+      btnReportComment.onclick = function () {
+        reportForm.action = '/comment/' + commentId + '/report?_method=PUT';
+        reportForm.submit();
+      }
+    $('.up').on("click", function () {
+      var userId = "{{ user._id }}";
+      var universityId = "{{ uni._id }}";
+      if (!userId) {
+        return location.assign(window.location.protocol + "//" + location.host + '/user/login');
+      }
+      req = $.ajax({
+        url: '/university/upvoted',
+        type: 'POST',
+        data: { universityId: universityId }
+      });
+      location.reload(true);
+    });
+
+    $('.down').on("click", function () {
+      var userId = "{{ user._id }}";
+      var universityId = "{{ uni._id }}";
+      if (!userId) {
+        return location.assign(window.location.protocol + "//" + location.host + '/user/login');
+      }
+      var value = $(this).attr('value');
+      req = $.ajax({
+        url: '/university/downvoted',
+        type: 'POST',
+        data: { universityId: universityId }
+      });
+      location.reload(true);
+    });
+
+
+    $(window).on('load', (function () {
       $('.templatemo-slide-link').click(function () {
         var this_href = $(this).attr('href');
         $('#templatemo-slide-link-target img').attr('src', this_href);
         return false;
       });
-      // End Slide
     }));
-  })
+  });
 </script>

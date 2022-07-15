@@ -6,7 +6,9 @@ const adminController = require("../app/controllers/AdminController");
 const { uploadSingleFile, uploadMultipleFiles } = require("../util/uploadImage");
 
 router.get("/list-university", adminController.list);
+router.get('/comments', adminController.listcomments);
 router.get("/create", adminController.create);
+router.post('/:id/verify', adminController.verifyComment);
 router.post(
   "/store",
   (req, res, next) => {
@@ -42,6 +44,7 @@ router.put(
   },
   adminController.update
 );
+router.delete("/:id/delete", adminController.deleteComment);
 router.delete("/:id", adminController.delete);
 
 module.exports = router;

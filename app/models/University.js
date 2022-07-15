@@ -16,6 +16,8 @@ const University = new Schema(
         description: { type: String, trim: true },
         tuision:{type: Number, trim: true},
         image: {type: [String]},
+        upvoters: [{type: Schema.Types.ObjectId, ref: 'User'}],
+        downvoters: [{type: Schema.Types.ObjectId, ref: 'User'}],
         slug: { type: String, slug: 'code', unique: true, lowercase: true },
     },
     {
@@ -23,7 +25,6 @@ const University = new Schema(
     },
 );
 
-// add plugin
 mongoose.plugin(slug);
 
 module.exports = mongoose.model('University', University);

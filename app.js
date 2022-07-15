@@ -63,6 +63,9 @@ app.engine(
           })
           .join('\n')
       },
+      isdefined: function(value) {
+        return value !== false;
+      }
     },
   })
 );
