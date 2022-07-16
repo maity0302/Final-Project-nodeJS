@@ -11,6 +11,7 @@ const session = require('express-session');
 
 const route = require("./routes");
 const db = require("./config/db");
+const {mongooseToObject} = require('./util/mongoose');
 
 // connect to database
 db.connect();
@@ -105,7 +106,9 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.render("error", {
+    user : mongooseToObject(req.user),
+  });
 });
 
 module.exports = app;
